@@ -1,13 +1,14 @@
 //
-//  ContentView.swift
+//  HomeView.swift
 //  AMplify
 //
-//  Created by William on 23/03/25.
+//  Created by William on 24/03/25.
 //
+
 
 import SwiftUI
 
-struct ContentView: View {
+struct HomeView: View {
     var body: some View {
         VStack {
             Image(systemName: "globe")
@@ -20,5 +21,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    HomeView()
 }
