@@ -12,7 +12,9 @@ struct OnboardingView: View {
         ZStack {
             TabView {
                 //TODO : Fill this with each page of the onboardingView, 1 onboardingView -> 1 page View in Page folder
-                 
+                OnboardingViewName()
+                OnboardingViewDifficulty()
+                OnboardingViewLocation()
             }.tabViewStyle(.page(indexDisplayMode: .always))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
         }
