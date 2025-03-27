@@ -12,6 +12,7 @@ struct OnboardingViewAlarm: View {
     @State private var isVibrate: Bool = true
     @State private var selectedTime = Date()
     @State private var alarms: [Date] = []
+    @State private var alarmName: String = ""
     
     var body: some View {
         
@@ -48,6 +49,7 @@ struct OnboardingViewAlarm: View {
                     HStack{
                         Text("Repeat")
                         Spacer()
+                        Text("Weekdays")
                         Label("", systemImage: "chevron.forward")
                             .foregroundStyle(Color.black)
                             .labelStyle(.iconOnly)
@@ -58,10 +60,11 @@ struct OnboardingViewAlarm: View {
                     HStack {
                         Text("Alarm name")
                         Spacer()
-                        Label("", systemImage: "chevron.forward")
+                        
+                        TextField("Insert Alarm Name", text: $alarmName)
                             .foregroundStyle(Color.black)
-                            .labelStyle(.iconOnly)
                             .frame(alignment: .trailing)
+                            .multilineTextAlignment(.trailing)
                         
                     }.listRowBackground(Color.lightGreyList)
                     
@@ -69,6 +72,7 @@ struct OnboardingViewAlarm: View {
                     HStack {
                         Text("Alarm sound")
                         Spacer()
+                        Text("Radial")
                         Label("", systemImage: "chevron.forward")
                             .foregroundStyle(Color.black)
                             .labelStyle(.iconOnly)
