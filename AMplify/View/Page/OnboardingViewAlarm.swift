@@ -57,7 +57,7 @@ struct OnboardingViewAlarm: View {
                                 .labelStyle(.iconOnly)
                                 .frame(alignment: .trailing)
                                 
-                        }
+                        }.listRowBackground(Color.lightGreyList)
                         
                         HStack {
                             Text("Alarm name")
@@ -66,7 +66,8 @@ struct OnboardingViewAlarm: View {
                                 .foregroundStyle(Color.black)
                                 .labelStyle(.iconOnly)
                                 .frame(alignment: .trailing)
-                        }
+                            
+                        }.listRowBackground(Color.lightGreyList)
                         
                         
                         HStack {
@@ -76,10 +77,18 @@ struct OnboardingViewAlarm: View {
                                 .foregroundStyle(Color.black)
                                 .labelStyle(.iconOnly)
                                 .frame(alignment: .trailing)
-                        }
+                        }.listRowBackground(Color.lightGreyList)
                         
                         Toggle("Vibration", isOn: $isVibrate)
+                            .listRowBackground(Color.lightGreyList)
+                        
                     }.frame(width: 400, height: 250)
+        
+            .scrollContentBackground(.hidden)
+        
+        
+            
+            
 
         
         Button(action: {
