@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct OnboardingViewAlarm: View {
-
+    
     @State private var isVibrate: Bool = true
     @State private var selectedTime = Date()
     @State private var alarms: [Date] = []
@@ -28,7 +28,7 @@ struct OnboardingViewAlarm: View {
                         DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
                             .datePickerStyle(WheelDatePickerStyle())
                             .padding(.all, 50)
-                           
+                        
                         
                         // List of saved alarms
                         List {
@@ -42,78 +42,81 @@ struct OnboardingViewAlarm: View {
                         .listStyle(PlainListStyle())
                     }
                 }.frame(alignment: .center)
-            }
-        }
                 
-//                Color.blue
-//                    .frame(width: 243, height: 261.36)
                 
-                    List{
-                        HStack{
-                            Text("Repeat")
-                            Spacer()
-                            Label("", systemImage: "chevron.forward")
-                                .foregroundStyle(Color.black)
-                                .labelStyle(.iconOnly)
-                                .frame(alignment: .trailing)
-                                
-                        }.listRowBackground(Color.lightGreyList)
+                List{
+                    HStack{
+                        Text("Repeat")
+                        Spacer()
+                        Label("", systemImage: "chevron.forward")
+                            .foregroundStyle(Color.black)
+                            .labelStyle(.iconOnly)
+                            .frame(alignment: .trailing)
                         
-                        HStack {
-                            Text("Alarm name")
-                            Spacer()
-                            Label("", systemImage: "chevron.forward")
-                                .foregroundStyle(Color.black)
-                                .labelStyle(.iconOnly)
-                                .frame(alignment: .trailing)
-                            
-                        }.listRowBackground(Color.lightGreyList)
+                    }.listRowBackground(Color.lightGreyList)
+                    
+                    HStack {
+                        Text("Alarm name")
+                        Spacer()
+                        Label("", systemImage: "chevron.forward")
+                            .foregroundStyle(Color.black)
+                            .labelStyle(.iconOnly)
+                            .frame(alignment: .trailing)
                         
-                        
-                        HStack {
-                            Text("Alarm sound")
-                            Spacer()
-                            Label("", systemImage: "chevron.forward")
-                                .foregroundStyle(Color.black)
-                                .labelStyle(.iconOnly)
-                                .frame(alignment: .trailing)
-                        }.listRowBackground(Color.lightGreyList)
-                        
-                        Toggle("Vibration", isOn: $isVibrate)
-                            .listRowBackground(Color.lightGreyList)
-                        
-                    }.frame(width: 400, height: 250)
-        
-            .scrollContentBackground(.hidden)
-        
-        
-            
-            
-
-        
-        Button(action: {
-            print("Placeholder")
-        }) {
-            HStack{
-                Text("Continue")
-                    .font(.headline)
-                Image(systemName: "arrow.right")
-            }
-
-                .frame(width: 350, height: 50)
-                .background(Color.teal)
-                .foregroundColor(.white)
-                .cornerRadius(12)
-            
-        }
-                    //                .frame(width: 361, height: 205)
+                    }.listRowBackground(Color.lightGreyList)
+                    
+                    
+                    HStack {
+                        Text("Alarm sound")
+                        Spacer()
+                        Label("", systemImage: "chevron.forward")
+                            .foregroundStyle(Color.black)
+                            .labelStyle(.iconOnly)
+                            .frame(alignment: .trailing)
+                    }.listRowBackground(Color.lightGreyList)
+                    
+                    Toggle("Vibration", isOn: $isVibrate)
+                        .listRowBackground(Color.lightGreyList)
+                    
+                }.frame(width: 400, height: 250)
+                
+                    .scrollContentBackground(.hidden)
+                
+                
+                
+                
+                
+                
+                Button(action: {
+                    print("Placeholder")
+                }) {
+                    HStack{
+                        Text("Continue")
+                            .font(.headline)
+                        Image(systemName: "arrow.right")
+                    }
+                    
+                    .frame(width: 350, height: 50)
+                    .background(Color.teal)
+                    .foregroundColor(.white)
+                    .cornerRadius(12)
+                    
                 }
-                
+                //                .frame(width: 361, height: 205)
             }
+        }
         
+        //                Color.blue
+        //                    .frame(width: 243, height: 261.36)
         
-            
-  
+
+    }
+    
+}
+
+
+
+
 
 
 
