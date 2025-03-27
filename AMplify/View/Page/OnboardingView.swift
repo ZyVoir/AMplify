@@ -14,6 +14,7 @@ struct OnboardingView: View {
                 //TODO : Fill this with each page of the onboardingView, 1 onboardingView -> 1 page View in Page folder
                 OnboardingViewAlarm()
                 OnboardingViewMR()
+                OnboardingViewPAA()
                  
             }.tabViewStyle(.page(indexDisplayMode: .always))
                 .indexViewStyle(.page(backgroundDisplayMode: .always))
