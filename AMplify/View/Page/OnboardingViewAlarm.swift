@@ -23,7 +23,7 @@ struct OnboardingViewAlarm: View {
                     .fontWeight(.bold)
                     .padding()
                 
-                NavigationStack {
+                
                     VStack {
                         // DatePicker for selecting alarm time
                         DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
@@ -42,26 +42,32 @@ struct OnboardingViewAlarm: View {
                         }
                         .listStyle(PlainListStyle())
                     }
-                }.frame(alignment: .center)
-                
+                .frame(alignment: .center)
+                .frame(alignment: .center)
                 
                 List{
                     HStack{
                         Text("Repeat")
                         Spacer()
-                        Text("Weekdays")
-                        Label("", systemImage: "chevron.forward")
-                            .foregroundStyle(Color.black)
-                            .labelStyle(.iconOnly)
-                            .frame(alignment: .trailing)
+                        
+                        
+                        NavigationLink(destination: RepeatView()){
+                            LabeledContent {
+                                Text("Weekdays")
+                            } label: {
+                                Spacer()
+                            }
+
+                        }.foregroundStyle(Color.black)
+
                         
                     }.listRowBackground(Color.lightGreyList)
                     
                     HStack {
-                        Text("Alarm name")
+                        Text("Label")
                         Spacer()
                         
-                        TextField("Insert Alarm Name", text: $alarmName)
+                        TextField("Alarm", text: $alarmName)
                             .foregroundStyle(Color.black)
                             .frame(alignment: .trailing)
                             .multilineTextAlignment(.trailing)
@@ -72,11 +78,16 @@ struct OnboardingViewAlarm: View {
                     HStack {
                         Text("Alarm sound")
                         Spacer()
-                        Text("Radial")
-                        Label("", systemImage: "chevron.forward")
-                            .foregroundStyle(Color.black)
-                            .labelStyle(.iconOnly)
-                            .frame(alignment: .trailing)
+    
+                        NavigationLink(destination: AlarmSoundView()){
+                            LabeledContent {
+                                Text("Radial")
+                            } label: {
+                                Spacer()
+                            }
+
+                        }.foregroundStyle(Color.black)
+                        
                     }.listRowBackground(Color.lightGreyList)
                     
                     Toggle("Vibration", isOn: $isVibrate)
