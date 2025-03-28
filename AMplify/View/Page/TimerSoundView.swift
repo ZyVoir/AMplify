@@ -23,6 +23,7 @@ struct TimerSoundView: View {
                         RadioButton(isSelected: selectedSound == sound)
                     }
                     .contentShape(Rectangle())
+                    .listRowBackground(Color.lightGreyList)
                     .onTapGesture{
                         selectedSound = sound
                     }

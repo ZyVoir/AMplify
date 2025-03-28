@@ -20,6 +20,7 @@ struct RepeatView: View {
                             HStack {
                                 Text(day)
                                 Spacer()
+                                
                                 if selectedDays.contains(day) {
                                     Image(systemName: "checkmark.circle.fill") // Selected icon
                                         .foregroundStyle(Color.teal)
@@ -30,6 +31,7 @@ struct RepeatView: View {
                                 }
                             }
                             .contentShape(Rectangle()) // Makes the whole row tappable
+                            .listRowBackground(Color.lightGreyList)
                                                 .onTapGesture {
                                                     if selectedDays.contains(day) {
                                                         selectedDays.remove(day)
