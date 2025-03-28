@@ -23,6 +23,7 @@ struct AlarmSoundView: View {
                         RadioButton(isSelected: selectedSound == sound)
                     }
                     .contentShape(Rectangle())
+                    .listRowBackground(Color.lightGreyList)
                     .onTapGesture{
                         selectedSound = sound
                     }
@@ -40,7 +41,7 @@ struct RadioButton: View {
     
     var body: some View {
         Image(systemName: isSelected ? "largecircle.fill.circle" : "circle")
-            .foregroundStyle(isSelected ? Color.blue : Color.gray)
+            .foregroundStyle(isSelected ? Color.teal : Color.gray)
     }
 }
 
