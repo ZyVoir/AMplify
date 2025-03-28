@@ -56,11 +56,15 @@ struct OnboardingViewMR: View {
                     HStack{
                         Text("When Timer Ends")
                         Spacer()
-                        Text("Radial")
-                        Label("", systemImage: "chevron.forward")
-                            .foregroundStyle(Color.black)
-                            .labelStyle(.iconOnly)
-                            .frame(alignment: .trailing)
+                        
+                        NavigationLink(destination: TimerSoundView()){
+                            LabeledContent {
+                                Text("Radial")
+                            } label: {
+                                Spacer()
+                            }
+
+                        }.foregroundStyle(Color.black)
                         
                     }.padding(18)
                         .listRowBackground(Color.lightGreyList)
