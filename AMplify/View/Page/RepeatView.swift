@@ -22,10 +22,11 @@ struct RepeatView: View {
                                 Spacer()
                                 if selectedDays.contains(day) {
                                     Image(systemName: "checkmark.circle.fill") // Selected icon
-                                        .foregroundStyle(Color.blue)
+                                        .foregroundStyle(Color.teal)
                                 } else {
                                     Image(systemName: "circle") // Unselected icon
                                         .foregroundStyle(Color.gray)
+                                    
                                 }
                             }
                             .contentShape(Rectangle()) // Makes the whole row tappable
