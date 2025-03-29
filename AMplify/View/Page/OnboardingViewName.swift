@@ -18,7 +18,6 @@ struct OnboardingViewName: View {
             VStack {
                 Spacer()
                 VStack (alignment: .leading){
-                   
                         Text("Hi, there!")
                             .font(.largeTitle)
                             .foregroundColor(.white)
@@ -34,7 +33,6 @@ struct OnboardingViewName: View {
                             .foregroundColor(.white)
                             .cornerRadius(10)
                             .padding(.horizontal, 0)
-                    
                 }
                 .padding(40)
                 
