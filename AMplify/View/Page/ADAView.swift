@@ -15,8 +15,12 @@ struct ADAView: View {
     
     var body: some View {
         Button {
-            isTransitionComplete = true
+            
             dismiss()
+            
+            withAnimation {
+                isTransitionComplete = true
+            }
         } label : {
             Text("ADA View")
         }

@@ -74,7 +74,7 @@ struct HomeHeader : View {
             
             
             
-            if isOnboarding {
+            if !isOnboarding {
                 // TODO : Implement Carousel
                 TabView(selection: $currentShowingTab) {
                     ForEach(carouselItems.indices, id: \.self) { i in
@@ -136,7 +136,8 @@ struct MainQuestList : View {
                     colorBottom: Color("Light Blue Gradient 2"),
                     title: morningRoutinePhase.alarmAndPAA.rawValue,
                     subtitle: "It's a new day, fresh start, fresh energy, new opportunities.",
-                    icon: "equal.square.fill"
+                    icon: "equal.square.fill",
+                    transitionText: "Great, Willy!"
                 )
                 
                 MainQuestCard(
@@ -144,7 +145,8 @@ struct MainQuestList : View {
                     colorBottom: Color("Primary Dark Gradient 2"),
                     title: morningRoutinePhase.morningRoutine.rawValue,
                     subtitle: "Boost your energy and productivity today!",
-                    icon: "cloud.sun.fill"
+                    icon: "cloud.sun.fill",
+                    transitionText: "Keep Going, Willy!"
                 
                 )
                 
@@ -153,7 +155,8 @@ struct MainQuestList : View {
                     colorBottom: Color("Orange Gradient 2"),
                     title: morningRoutinePhase.ADA.rawValue,
                     subtitle: "You're All Set!",
-                    icon: "mappin.and.ellipse"
+                    icon: "mappin.and.ellipse",
+                    transitionText: "All set for today, Willy!"
                 )
             }
             

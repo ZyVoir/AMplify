@@ -10,9 +10,15 @@ import SwiftUI
 struct MorningRoutineView: View {
     
     @Binding var isTransitionComplete: Bool
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        Text("Morning Routine View")
+        Button {
+            isTransitionComplete = true
+            dismiss()
+        } label : {
+            Text("MorningRoutineView")
+        }
     }
 }
 
