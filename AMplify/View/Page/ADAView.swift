@@ -15,8 +15,14 @@ struct ADAView: View {
     
     var body: some View {
         Button {
-            isTransitionComplete = true
+          
             dismiss()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation {
+                    isTransitionComplete = true
+                }
+            }
+
         } label : {
             Text("ADA View")
         }

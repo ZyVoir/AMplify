@@ -11,42 +11,47 @@ import BackgroundTasks
 @main
 struct AMplifyApp: App {
     
-    @AppStorage("morningRoutinePhase") var phase : morningRoutinePhase = .none
+
+    @AppStorage("morningRoutinePhase") private var phase: morningRoutinePhase = .none
+    @AppStorage("lastCheckedDate") private var lastCheckedDate: String = ""
+    @AppStorage("isOnboarding") private var isOnboarding: Bool = true
+    
     
     init() {
-        registerBackgroundTask()
+        
+
     }
     
     var body: some Scene {
         WindowGroup {
             SplashScreenView()
+                .onAppear {
+                    checkForNewDay()
+                }
         }
     }
-    
-    func registerBackgroundTask() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "AppleDeveloperAcademy.AMplify", using: nil) { task in
-            self.handleDayChange()
-            task.setTaskCompleted(success: true)
-            self.scheduleBackgroundTask() // Reschedule for the next run
-        }
-    }
-    
-    func scheduleBackgroundTask() {
-        let request = BGProcessingTaskRequest(identifier: "AppleDeveloperAcademy.AMplify")
-        request.requiresNetworkConnectivity = false
-        request.requiresExternalPower = false
-        request.earliestBeginDate = Calendar.current.startOfDay(for: Date().addingTimeInterval(86400)) // Next day
+
+    func checkForNewDay() {
+        let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
         
-        do {
-            try BGTaskScheduler.shared.submit(request)
-        } catch {
-            print("Failed to schedule background task: \(error)")
+        print("isOnboarding : \(isOnboarding)")
+        print("lastCheckedDate : \(lastCheckedDate)")
+        
+        if isOnboarding {
+            phase = .none
+            isOnboarding = true
+            return
+        }
+        
+        if today != lastCheckedDate {
+            print("🌅 New day detected! Running daily task...")
+            lastCheckedDate = today
+            phase = .alarmAndPAA
+        } else {
+            print("✅ Same day, no action needed")
         }
     }
     
-    func handleDayChange() {
-        print("New day detected! Run your function here.")
-        // Your custom logic goes here
-        phase = .done
-    }
+
 }
+

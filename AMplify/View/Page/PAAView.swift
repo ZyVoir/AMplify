@@ -10,12 +10,24 @@ import SwiftUI
 struct PAAView: View {
     
     @Binding var isTransitionComplete: Bool
+
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
-        Text("PAAView")
+        Button {
+            dismiss()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation {
+                    isTransitionComplete = true
+                }
+            }
+        } label : {
+            Text("PAAView")
+        }
+
     }
 }
 
 #Preview {
-    PAAView(isTransitionComplete: .constant(false))
+    HomeView()
 }

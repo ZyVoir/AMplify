@@ -24,7 +24,9 @@ struct MainQuestCard: View {
     var title : String
     var subtitle : String
     var icon : String
-    
+
+    var transitionText : String
+
     
     let colorWhite : Color = Color("White")
     let colorGreyPrimary : Color = Color("Grey Primary")
@@ -69,50 +71,64 @@ struct MainQuestCard: View {
             }
         }) {
             HStack (alignment: .center, spacing: 20) {
-                Image(systemName: icon)
+
+                Image(systemName: isTransitionComplete ? "hand.thumbsup.fill" : icon)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 50, height: 50)
                     .foregroundColor(isCurrentActive ? colorWhite : isCompleted ? colorDarkGreen :  colorGreyPrimary)
                     .padding(.leading, 10)
                 
-                VStack (alignment: .leading) {
-                    Text(title)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundColor(isCurrentActive ? colorWhite : isCompleted ? colorDarkGreen : colorGreyPrimary)
-                    
-                    
-                    
-                    if isCompleted{
-                        Text("\(subtitle)")
-                            .font(.system(size: 11, weight: .regular))
-                            .lineLimit(nil)
-                            .foregroundStyle(colorDarkGreen)
-                            .padding(.top, 1)
-                            .fixedSize(horizontal: false, vertical: true)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .multilineTextAlignment(.leading)
+
+                if isTransitionComplete {
+                    VStack {
+                        Text(transitionText)
+                            .font(.system(size: 20, weight: .semibold))
+                            .foregroundStyle(colorWhite)
                         
-                    } else {
-                        HStack (alignment: .center) {
-                            Image(systemName: isCurrentActive ? "play.fill" : "lock.fill")
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 13, height: 13)
-                            
-                            
-                            Text(isCurrentActive ?  "Do it now" : "Locked" )
-                                .font(.system(size: 13, weight: .medium))
-                            
-                        }.foregroundColor(isCurrentActive ? colorTop : colorGreyPrimary)
-                        
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 15)
-                            .frame(height: 28)
-                            .background(RoundedRectangle(cornerSize: CGSize(width: 40, height: 40)).fill(isCurrentActive ? colorWhite : colorGreySecondary))
-                    }
+                    }.padding(.vertical,20)
                     
-                }.padding(.vertical, 8)
+                } else {
+                    VStack (alignment: .leading) {
+                        Text(title)
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundColor(isCurrentActive ? colorWhite : isCompleted ? colorDarkGreen : colorGreyPrimary)
+                        
+                        
+                        
+                        if isCompleted{
+                            Text("\(subtitle)")
+                                .font(.system(size: 11, weight: .regular))
+                                .lineLimit(nil)
+                                .foregroundStyle(colorDarkGreen)
+                                .padding(.top, 1)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                            
+                        } else {
+                            HStack (alignment: .center) {
+                                Image(systemName: isCurrentActive ? "play.fill" : "lock.fill")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 13, height: 13)
+                                
+                                
+                                Text(isCurrentActive ?  "Do it now" : "Locked" )
+                                    .font(.system(size: 13, weight: .medium))
+                                
+                            }.foregroundColor(isCurrentActive ? colorTop : colorGreyPrimary)
+                            
+                                .padding(.vertical, 10)
+                                .padding(.horizontal, 15)
+                                .frame(height: 28)
+                                .background(RoundedRectangle(cornerSize: CGSize(width: 40, height: 40)).fill(isCurrentActive ? colorWhite : colorGreySecondary))
+                        }
+                        
+                    }.padding(.vertical, 8)
+                }
+                
+
                 
                 if isCompleted {
                     Image(systemName: "checkmark.square.fill")
@@ -136,7 +152,23 @@ struct MainQuestCard: View {
         .disabled(!isCurrentActive)
         .onChange(of: isTransitionComplete) { oldValue, newValue in
             if isCurrentActive && newValue {
-                
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    withAnimation {
+                        isTransitionComplete = false
+                        
+                        switch phase {
+                        case .alarmAndPAA:
+                            phase = .morningRoutine
+                        case .morningRoutine:
+                            phase = .ADA
+                        case .ADA:
+                            phase = .done
+                        default: break
+                        }
+                    }
+                }
+
             }
         }
     }
