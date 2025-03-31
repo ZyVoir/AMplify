@@ -74,6 +74,7 @@ struct HomeHeader : View {
             
             
             
+
             if !isOnboarding {
                 // TODO : Implement Carousel
                 TabView(selection: $currentShowingTab) {
@@ -146,8 +147,7 @@ struct MainQuestList : View {
                     title: morningRoutinePhase.morningRoutine.rawValue,
                     subtitle: "Boost your energy and productivity today!",
                     icon: "cloud.sun.fill",
-                    transitionText: "Keep Going, Willy!"
-                
+                    transitionText: "Keep Going, Willy!"                
                 )
                 
                 MainQuestCard(

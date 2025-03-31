@@ -11,6 +11,7 @@ import BackgroundTasks
 @main
 struct AMplifyApp: App {
     
+
     @AppStorage("morningRoutinePhase") private var phase: morningRoutinePhase = .none
     @AppStorage("lastCheckedDate") private var lastCheckedDate: String = ""
     @AppStorage("isOnboarding") private var isOnboarding: Bool = true
@@ -18,8 +19,7 @@ struct AMplifyApp: App {
     
     init() {
         
-        
-        
+
     }
     
     var body: some Scene {
@@ -30,7 +30,7 @@ struct AMplifyApp: App {
                 }
         }
     }
-    
+
     func checkForNewDay() {
         let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
         
@@ -52,5 +52,6 @@ struct AMplifyApp: App {
         }
     }
     
+
 }
 

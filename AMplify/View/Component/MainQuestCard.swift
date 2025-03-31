@@ -24,7 +24,9 @@ struct MainQuestCard: View {
     var title : String
     var subtitle : String
     var icon : String
+
     var transitionText : String
+
     
     let colorWhite : Color = Color("White")
     let colorGreyPrimary : Color = Color("Grey Primary")
@@ -69,6 +71,7 @@ struct MainQuestCard: View {
             }
         }) {
             HStack (alignment: .center, spacing: 20) {
+
                 Image(systemName: isTransitionComplete ? "hand.thumbsup.fill" : icon)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -76,6 +79,7 @@ struct MainQuestCard: View {
                     .foregroundColor(isCurrentActive ? colorWhite : isCompleted ? colorDarkGreen :  colorGreyPrimary)
                     .padding(.leading, 10)
                 
+
                 if isTransitionComplete {
                     VStack {
                         Text(transitionText)
@@ -124,6 +128,7 @@ struct MainQuestCard: View {
                     }.padding(.vertical, 8)
                 }
                 
+
                 
                 if isCompleted {
                     Image(systemName: "checkmark.square.fill")
@@ -147,6 +152,7 @@ struct MainQuestCard: View {
         .disabled(!isCurrentActive)
         .onChange(of: isTransitionComplete) { oldValue, newValue in
             if isCurrentActive && newValue {
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                     withAnimation {
                         isTransitionComplete = false
@@ -162,6 +168,7 @@ struct MainQuestCard: View {
                         }
                     }
                 }
+
             }
         }
     }
