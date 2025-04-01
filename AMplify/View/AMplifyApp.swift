@@ -14,7 +14,7 @@ struct AMplifyApp: App {
 
     @AppStorage("morningRoutinePhase") private var phase: morningRoutinePhase = .none
     @AppStorage("lastCheckedDate") private var lastCheckedDate: String = ""
-    @AppStorage("isOnboarding") private var isOnboarding: Bool = true
+    @AppStorage("isOnboarding") private var isOnboarding: Bool = false
     
     
     init() {
