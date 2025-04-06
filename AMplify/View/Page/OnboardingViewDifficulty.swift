@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct OnboardingViewDifficulty: View {
+    
+    @Binding var onboardingTab : Int
+    
+    @AppStorage("postAlarmActivityDifficulty") var activityDifficulty: String = ""
+    
     @State private var selectedDifficulty: String = "Easy"
     let difficulties = ["Easy", "Medium", "Hard"]
     
@@ -47,6 +52,12 @@ struct OnboardingViewDifficulty: View {
            
             Button(action: {
                 print("Selected difficulty: \(selectedDifficulty)")
+                
+                activityDifficulty = selectedDifficulty
+                
+                withAnimation {
+                    onboardingTab += 1
+                }
             }) {
                 HStack {
                     Text("Continue")
@@ -70,5 +81,5 @@ struct OnboardingViewDifficulty: View {
 
 
 #Preview {
-    OnboardingViewDifficulty()
+    OnboardingViewDifficulty(onboardingTab: .constant(4))
 }

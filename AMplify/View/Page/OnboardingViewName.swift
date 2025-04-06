@@ -8,7 +8,12 @@
 import SwiftUI
 
 struct OnboardingViewName: View {
+    @State private var isPresented: Bool = false
+    @AppStorage("username") var username: String = ""
     @State private var name: String = ""
+    
+    @Binding var onboardingTab : Int
+    
     var body: some View {
         ZStack {
             Image("1 - OnboardingViewName")
@@ -18,25 +23,36 @@ struct OnboardingViewName: View {
             VStack {
                 Spacer()
                 VStack (alignment: .leading){
-                        Text("Hi, there!")
-                            .font(.largeTitle)
-                            .foregroundColor(.white)
-                            .fontWeight(.bold)
-                            .padding(.bottom,5)
-                        Text("Tell us your name..")
-                            .font(.title)
-                            .foregroundColor(.white.opacity(0.8))
-                            .padding(.bottom,20)
-                        TextField("Enter your name", text: $name)
-                            .padding(15)
-                            .background(.opacity(0.3))
-                            .foregroundColor(.white)
-                            .cornerRadius(10)
-                            .padding(.horizontal, 0)
+                    Text("Hi, there!")
+                        .font(.largeTitle)
+                        .foregroundColor(.white)
+                        .fontWeight(.bold)
+                        .padding(.bottom,5)
+                    Text("Tell us your name..")
+                        .font(.title)
+                        .foregroundColor(.white.opacity(0.8))
+                        .padding(.bottom,20)
+                    TextField("Enter your name", text: $name)
+                        .padding(15)
+                        .background(.opacity(0.3))
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                        .padding(.horizontal, 0)
                 }
                 .padding(40)
                 
-                Button(action: {}) {
+                Button(action: {
+                    if name.isEmpty || !helperFunction.isValidUsername(state: name){
+                        isPresented = true
+                    }
+                    else {
+                        username = name
+                        
+                        withAnimation {
+                            onboardingTab += 1
+                        }
+                    }
+                }) {
                     HStack {
                         Text("Continue")
                         Image(systemName: "arrow.right")
@@ -51,13 +67,24 @@ struct OnboardingViewName: View {
                 .padding(.top, 20)
                 Spacer()
                 Spacer()
-                HStack {
-                    ForEach(0..<5) {index in Circle()
-                            .fill(index == 0 ? Color.white : Color.gray)
-                            .frame(width: 10, height: 10)
-                    }
+                //                HStack {
+                //                    ForEach(0..<5) {index in Circle()
+                //                            .fill(index == 0 ? Color.white : Color.gray)
+                //                            .frame(width: 10, height: 10)
+                //                    }
+                //                }
+                //                .padding(.bottom, 45)
+            }.alert("Error!", isPresented: $isPresented){
+                Button("OK", role: .cancel) {
+                    isPresented = false
                 }
-                .padding(.bottom, 45)
+            } message: {
+                if name.isEmpty {
+                    Text("Name is Required!")
+                }
+                else if !helperFunction.isValidUsername(state: name){
+                    Text("Name must only be letters!")
+                }
             }
         }
     }
@@ -66,5 +93,5 @@ struct OnboardingViewName: View {
 
 
 #Preview {
-    OnboardingViewName()
+    OnboardingViewName(onboardingTab: .constant(0))
 }

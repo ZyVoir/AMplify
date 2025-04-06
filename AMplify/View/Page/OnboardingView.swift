@@ -8,32 +8,30 @@
 import SwiftUI
 
 struct OnboardingView: View {
+    
+    @State private var onboardingTab : Int = 0
+    
     var body: some View {
         ZStack {
-            TabView {
-                //TODO : Fill this with each page of the onboardingView, 1 onboardingView -> 1 page View in Page folder
-
-                OnboardingViewName()
-                    .navigationBarBackButtonHidden()
-              
-                OnboardingViewAlarm()
-                    .navigationBarBackButtonHidden()
-              
-                OnboardingViewMR()
-                    .navigationBarBackButtonHidden()
-              
-                OnboardingViewPAA()
-                    .navigationBarBackButtonHidden()
-              
-                OnboardingViewDifficulty()
-                    .navigationBarBackButtonHidden()
-              
+            
+            switch onboardingTab {
+            case 0:
+                OnboardingViewName(onboardingTab: $onboardingTab)
+            case 1:
+                OnboardingViewAlarm(onboardingTab: $onboardingTab)
+            case 2:
+                OnboardingViewMR(onboardingTab: $onboardingTab)
+            case 3:
+                OnboardingViewPAA(onboardingTab: $onboardingTab)
+            case 4:
+                OnboardingViewDifficulty(onboardingTab: $onboardingTab)
+            case 5:
                 OnboardingViewLocation()
-                    .navigationBarBackButtonHidden()
-
-            }.tabViewStyle(.page(indexDisplayMode: .never))
-                
-        }
+            default:
+                EmptyView()
+            }
+        }.navigationBarBackButtonHidden()
+        
     }
 }
 
