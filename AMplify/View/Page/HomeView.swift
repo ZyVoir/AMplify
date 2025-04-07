@@ -9,6 +9,9 @@
 import SwiftUI
 
 struct HomeView: View {
+    
+    @AppStorage("isOnboarding") private var isOnboarding: Bool = true
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -45,20 +48,24 @@ struct HomeView: View {
                 .background(Color("White"))
                 
             }
+        }.onAppear{
+            if !(LocationManager.shared.authorizationStatus == .authorizedAlways || LocationManager.shared.authorizationStatus == .authorizedWhenInUse) && !isOnboarding {
+                LocationManager.shared.requestPermission()
+            }
         }
     }
 }
 
 struct HomeHeader : View {
     
-    @AppStorage("isOnboarding") private var isOnboarding: Bool = false
+    @AppStorage("isOnboarding") private var isOnboarding: Bool = true
     
     @AppStorage("morningRoutinePhase") private var morningRoutinePhase : morningRoutinePhase = .none
     
     let morningRoutinePhases : [morningRoutinePhase] = [.none, .alarmAndPAA, .morningRoutine, .ADA, .done]
     
     // TODO: Change the value of this array
-    let carouselItems : [String] = ["CarouselOnboard", "CarouselOnboard", "CarouselOnboard"]
+    let carouselItems : [String] = ["Carousel_1", "Carousel_1"]
     
     @State var currentShowingTab : Int = 0
     
@@ -66,15 +73,23 @@ struct HomeHeader : View {
 
     @State var index : Int = 0
     
+    @AppStorage("username") private var username : String = ""
+   
     var body: some View {
         VStack (alignment: .leading) {
-            Text("Home")
+            
+            Text(isOnboarding ? "Home" : "Good Morning, \(username)!")
                 .font(.system(size: 28, weight: .bold, design: .default))
                 .padding(.bottom,17)
+                .foregroundStyle(Color("Black"))
+                .onTapGesture {
+                    morningRoutinePhase = morningRoutinePhases[index]
+                    
+                    index = (index + 1) % morningRoutinePhases.count
+                }
             
             
             
-
             if !isOnboarding {
                 // TODO : Implement Carousel
                 TabView(selection: $currentShowingTab) {
@@ -99,15 +114,6 @@ struct HomeHeader : View {
                 
             }
             else {
-                Button {
-                    morningRoutinePhase = morningRoutinePhases[index]
-                    
-                    index = (index + 1) % morningRoutinePhases.count 
-                } label: {
-                    Text("\(morningRoutinePhase)")
-                }
-                
-                
                 NavigationLink(destination: OnboardingView()){
                     Image("CarouselOnboard")
                         .resizable()
@@ -124,6 +130,7 @@ struct HomeHeader : View {
 
 struct MainQuestList : View {
     
+    @AppStorage("username") private var username : String = ""
     
     var body: some View {
         VStack (alignment: .leading) {
@@ -138,7 +145,7 @@ struct MainQuestList : View {
                     title: morningRoutinePhase.alarmAndPAA.rawValue,
                     subtitle: "It's a new day, fresh start, fresh energy, new opportunities.",
                     icon: "equal.square.fill",
-                    transitionText: "Great, Willy!"
+                    transitionText: "Great, \(username)!"
                 )
                 
                 MainQuestCard(
@@ -147,7 +154,7 @@ struct MainQuestList : View {
                     title: morningRoutinePhase.morningRoutine.rawValue,
                     subtitle: "Boost your energy and productivity today!",
                     icon: "cloud.sun.fill",
-                    transitionText: "Keep Going, Willy!"                
+                    transitionText: "Keep Going, \(username)!"
                 )
                 
                 MainQuestCard(
@@ -156,7 +163,7 @@ struct MainQuestList : View {
                     title: morningRoutinePhase.ADA.rawValue,
                     subtitle: "You're All Set!",
                     icon: "mappin.and.ellipse",
-                    transitionText: "All set for today, Willy!"
+                    transitionText: "All set for today, \(username)!"
                 )
             }
             

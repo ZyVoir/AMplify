@@ -11,6 +11,7 @@ struct MainQuestCard: View {
     
     @AppStorage("morningRoutinePhase") private var phase : morningRoutinePhase = .none
     
+    @StateObject private var locationManager : LocationManager = LocationManager.shared
     
     private var morningRoutineOrder : Int {
         
@@ -56,6 +57,8 @@ struct MainQuestCard: View {
     
     @State private var isTransitionComplete : Bool = false
     
+    @State private var distanceToAcademy : Int = 0
+    
     var body: some View {
         NavigationLink (destination: {
             switch phase {
@@ -63,6 +66,7 @@ struct MainQuestCard: View {
                 PAAView(isTransitionComplete: $isTransitionComplete)
             case .morningRoutine:
                 MorningRoutineView(isTransitionComplete: $isTransitionComplete)
+                    
             case .ADA:
                 ArrivalView()
                     .navigationBarBackButtonHidden()
@@ -106,7 +110,21 @@ struct MainQuestCard: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .multilineTextAlignment(.leading)
                             
-                        } else {
+                        }
+                        else if title == morningRoutinePhase.ADA.rawValue && isCurrentActive {
+                            Text("\(distanceToAcademy) Km away")
+                                .font(.system(size: 11, weight: .regular))
+                                .lineLimit(nil)
+                                .foregroundStyle(colorWhite)
+                                .padding(.top, 1)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .multilineTextAlignment(.leading)
+                                .onChange(of: locationManager.distanceFromAcademy) { oldValue, newValue in
+                                    distanceToAcademy = Int(LocationManager.shared.distanceFromAcademy)
+                                }
+                        }
+                        else {
                             HStack (alignment: .center) {
                                 Image(systemName: isCurrentActive ? "play.fill" : "lock.fill")
                                     .resizable()

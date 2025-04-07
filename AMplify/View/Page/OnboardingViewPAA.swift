@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct OnboardingViewPAA: View {
+    
+    @AppStorage("postAlarmActivityMethod") var postAlarmActivityMethod: String = ""
+    
+    @Binding var onboardingTab : Int
+    
     var body: some View {
         ZStack{
             VStack {
@@ -17,54 +22,84 @@ struct OnboardingViewPAA: View {
                     .padding()
                 
                 HStack{
-                    Image("PAA1")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 20)
-                                    
+                    Button {
+                        postAlarmActivityMethod = "MathEquation"
+                        
+                        withAnimation {
+                            onboardingTab += 1
+                        }
+                    } label : {
+                        Image("PAA1")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 20)
+                    }
                     
-                    Image("PAA2")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 20)
+                    Button {
+                        
+                    } label : {
+                        Image("PAA2")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 20)
+                    }
                     
-                
+                    
                 }
                 HStack{
-                    Image("PAA3")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 20)
-                                    
                     
-                    Image("PAA4")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 10)
+                    Button {
+                        
+                    } label : {
+                        Image("PAA3")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 20)
+                    }
+                    
+                    
+                    
+                    Button {
+                        
+                    } label : {
+                        Image("PAA4")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 10)
+                    }
+                    
                 }
                 HStack{
-                    Image("PAA5")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 10)
-                                    
                     
-                    Image("PAA6")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 143, height:143)
-                        .padding(.bottom, 20)
-                        .shadow(radius: 10)
+                    Button {
+                        
+                    } label : {
+                        Image("PAA5")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 10)
+                    }
+                    
+                    Button {
+                        
+                    } label : {
+                        Image("PAA6")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 143, height:143)
+                            .padding(.bottom, 20)
+                            .shadow(radius: 10)
+                    }
                 }
                 
                 Spacer()
@@ -74,5 +109,5 @@ struct OnboardingViewPAA: View {
 }
 
 #Preview {
-    OnboardingViewPAA()
+    OnboardingViewPAA(onboardingTab: .constant(3))
 }

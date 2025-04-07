@@ -9,10 +9,14 @@ import SwiftUI
 
 struct OnboardingViewAlarm: View {
     
+    @Binding var onboardingTab: Int
+    
     @State private var isVibrate: Bool = true
     @State private var selectedTime = Date()
     @State private var alarms: [Date] = []
     @State private var alarmName: String = ""
+    
+    @AppStorage("alarmTime") private var alarmTime: String = ""
     
     var body: some View {
         
@@ -103,7 +107,18 @@ struct OnboardingViewAlarm: View {
                 
                 
                 Button(action: {
-                    print("Placeholder")
+                    let calendar = Calendar.current
+                    var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedTime)
+                    components.second = 0
+                    selectedTime = calendar.date(from: components)!
+                    
+                    alarmTime = helperFunction.formatAlarmTime(time: selectedTime)
+                    
+                    print(alarmTime)
+                    
+                    withAnimation {
+                        onboardingTab += 1
+                    }
                 }) {
                     HStack{
                         Text("Continue")
@@ -136,5 +151,5 @@ struct OnboardingViewAlarm: View {
 
 
 #Preview {
-    OnboardingViewAlarm()
+    OnboardingViewAlarm(onboardingTab: .constant(1))
 }
