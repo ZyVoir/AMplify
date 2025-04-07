@@ -64,7 +64,7 @@ struct MainQuestCard: View {
             case .morningRoutine:
                 MorningRoutineView(isTransitionComplete: $isTransitionComplete)
             case .ADA:
-                ADAView(isTransitionComplete: $isTransitionComplete)
+                ArrivalView()
                     .navigationBarBackButtonHidden()
             default:
                 EmptyView()
