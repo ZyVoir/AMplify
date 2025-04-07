@@ -1,13 +1,14 @@
 //
-//  ADAView.swift
+//  ADAViewCiCo.swift
 //  AMplify
 //
-//  Created by William on 29/03/25.
+//  Created by Sufi Arifin on 06/04/25.
 //
+
 
 import SwiftUI
 
-struct ADAView: View {
+struct ADAViewCiCo: View {
     
     @Binding var isTransitionComplete: Bool
     @Environment(\.dismiss) var dismiss
@@ -74,20 +75,40 @@ struct ADAView: View {
                                     .foregroundColor(.white)
                                     .padding()
                                 VStack(alignment: .leading) {
-                                    Text("Arrive at Apple Developer Academy")
-                                        .font(.headline)
+                                    Text("You've arrived at Apple")
+                                        .font(.system(size: 20, weight: .semibold))
                                         .foregroundColor(.white)
-                                        .padding(-8)
-                                    Text("15 km away!")
-                                        .font(.headline)
-                                        .foregroundColor(.white.opacity(0.8))
-                                        .padding(.vertical, 5)
-                                        .padding(.horizontal, -8)
+                                        .padding(.horizontal, 2)
+                                        .padding(.vertical, -10)
+                                        .padding(.top, 30)
+                                    Text("Developer Academy")
+                                        .font(.system(size: 20, weight: .semibold))
+                                        .foregroundColor(.white)
+                                        .padding(.horizontal, 2)
+                                        .padding(.vertical, 2)
+                                        
+                                    Button(action: {
+                                                print("Clock In button tapped")
+                                            }) {
+                                                HStack {
+                                                    Image(systemName: "clock.fill")
+                                                        .font(.system(size: 20, weight: .regular))
+                                                        .foregroundColor(.orange)
+                                                    Text("Clock In")
+                                                        .font(.system(size: 20, weight: .regular))
+                                                        .foregroundColor(.orange)
+                                                }
+                                                .padding(.horizontal, 15)
+                                                .padding(.vertical, 5)
+                                                .background(Color.white)
+                                                .cornerRadius(30)
+                                            }
                                 }
                                 Spacer()
                             }
-                            .padding(.top, 50)
-                            .padding(.bottom, 50)
+                            .padding(.top, 40)
+                            .padding(.horizontal, 5)
+                            .padding(.bottom, 55)
                             .background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.yellow]), startPoint: .leading, endPoint: .trailing))
                             .frame(width: 370, height: 130)
                             .cornerRadius(15)
@@ -100,41 +121,6 @@ struct ADAView: View {
             }
         }
 
-        // Reusable Task Card Component
-        struct TaskCard: View {
-            var icon: String
-            var title: String
-            var description: String
-            var completed: Bool
-            
-            var body: some View {
-                HStack {
-                    Image(systemName: icon)
-                        .font(.title)
-                        .foregroundColor(.green)
-                    
-                    VStack(alignment: .leading) {
-                        Text(title)
-                            .font(.headline)
-                        Text(description)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    Spacer()
-                    
-                    if completed {
-                        Image(systemName: "checkmark.square.fill")
-                            .foregroundColor(.green)
-                            .font(.title)
-                    }
-                }
-                .padding()
-                .background(Color.green.opacity(0.1))
-                .cornerRadius(12)
-                .padding(.horizontal)
-            }
-        }
-
 #Preview {
-    ADAView(isTransitionComplete: .constant(false))
+    ADAViewCiCo(isTransitionComplete: .constant(false))
 }

@@ -1,13 +1,13 @@
 //
-//  ADAView.swift
+//  ADAViewAllSet.swift
 //  AMplify
 //
-//  Created by William on 29/03/25.
+//  Created by Sufi Arifin on 07/04/25.
 //
 
 import SwiftUI
 
-struct ADAView: View {
+struct ADAViewAllSet: View {
     
     @Binding var isTransitionComplete: Bool
     @Environment(\.dismiss) var dismiss
@@ -69,20 +69,16 @@ struct ADAView: View {
                         
                         NavigationLink(destination: Text("Apple Developer Academy")) {
                             HStack {
-                                Image(systemName: "iphone.badge.location")
-                                    .font(.largeTitle)
+                                Image(systemName: "hand.thumbsup.circle")
+                                    .font(.system(size: 55, weight: .regular))
                                     .foregroundColor(.white)
+                                    .symbolEffect(.breathe)
                                     .padding()
                                 VStack(alignment: .leading) {
-                                    Text("Arrive at Apple Developer Academy")
-                                        .font(.headline)
+                                    Text("All set for today, Willy!")
+                                        .font(.system(size: 23, weight: .semibold))
                                         .foregroundColor(.white)
                                         .padding(-8)
-                                    Text("15 km away!")
-                                        .font(.headline)
-                                        .foregroundColor(.white.opacity(0.8))
-                                        .padding(.vertical, 5)
-                                        .padding(.horizontal, -8)
                                 }
                                 Spacer()
                             }
@@ -100,41 +96,6 @@ struct ADAView: View {
             }
         }
 
-        // Reusable Task Card Component
-        struct TaskCard: View {
-            var icon: String
-            var title: String
-            var description: String
-            var completed: Bool
-            
-            var body: some View {
-                HStack {
-                    Image(systemName: icon)
-                        .font(.title)
-                        .foregroundColor(.green)
-                    
-                    VStack(alignment: .leading) {
-                        Text(title)
-                            .font(.headline)
-                        Text(description)
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                    }
-                    Spacer()
-                    
-                    if completed {
-                        Image(systemName: "checkmark.square.fill")
-                            .foregroundColor(.green)
-                            .font(.title)
-                    }
-                }
-                .padding()
-                .background(Color.green.opacity(0.1))
-                .cornerRadius(12)
-                .padding(.horizontal)
-            }
-        }
-
 #Preview {
-    ADAView(isTransitionComplete: .constant(false))
+    ADAViewAllSet(isTransitionComplete: .constant(false))
 }
