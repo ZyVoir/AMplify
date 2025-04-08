@@ -10,6 +10,7 @@ import SwiftUI
 struct MainQuestCard: View {
     
     @AppStorage("morningRoutinePhase") private var phase : morningRoutinePhase = .none
+    @AppStorage("isMorningRoutineStarted") private var isMorningRoutineStarted: Bool = false
     
     @StateObject private var locationManager : LocationManager = LocationManager.shared
     
@@ -181,6 +182,7 @@ struct MainQuestCard: View {
                         case .morningRoutine:
                             phase = .ADA
                         case .ADA:
+                            isMorningRoutineStarted = false
                             phase = .done
                         default: break
                         }

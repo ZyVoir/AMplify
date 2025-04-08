@@ -12,6 +12,30 @@ struct HomeView: View {
     
     @AppStorage("isOnboarding") private var isOnboarding: Bool = true
     
+    @AppStorage("morningRoutineAlarmSound") var morningRoutineAlarmSound: String = "Clock.mp3"
+    
+    @AppStorage("isMorningRoutineStarted") private var isMorningRoutineStarted: Bool = false
+    
+    @State private var now = Date()
+    @State private var timerEnded = false
+    
+    @AppStorage("morningRoutineEndTime") var morningRoutineEndTime: String = ""
+    
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var MREdntTime: Date {
+        let components = morningRoutineEndTime.split(separator: ":").compactMap { Int($0) }
+        guard components.count == 3 else { return Date() }
+        
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: Date())
+        dateComponents.hour = components[0]
+        dateComponents.minute = components[1]
+        dateComponents.second = components[2]
+        
+        return calendar.date(from: dateComponents) ?? Date()
+    }
+    
     var body: some View {
         NavigationStack {
             ZStack {
@@ -49,8 +73,20 @@ struct HomeView: View {
                 
             }
         }.onAppear{
+            // Request Notification
+            NotificationManager.instance.requestNotificationPermission()
+            
+            // request location permission
             if !(LocationManager.shared.authorizationStatus == .authorizedAlways || LocationManager.shared.authorizationStatus == .authorizedWhenInUse) && !isOnboarding {
                 LocationManager.shared.requestPermission()
+            }
+        }
+        .onReceive(timer) {currentTime in
+            now = currentTime
+            
+            if isMorningRoutineStarted && !timerEnded && now >= MREdntTime {
+                timerEnded = true
+                SoundManager.shared.playSound(named: morningRoutineAlarmSound.components(separatedBy: ".").first!, extension: morningRoutineAlarmSound.description.components(separatedBy: ".")[1],loop: true)
             }
         }
     }
@@ -70,11 +106,11 @@ struct HomeHeader : View {
     @State var currentShowingTab : Int = 0
     
     private let timer = Timer.publish(every: 5, on: .main, in: .common).autoconnect()
-
+    
     @State var index : Int = 0
     
     @AppStorage("username") private var username : String = ""
-   
+    
     var body: some View {
         VStack (alignment: .leading) {
             
@@ -86,6 +122,8 @@ struct HomeHeader : View {
                     morningRoutinePhase = morningRoutinePhases[index]
                     
                     index = (index + 1) % morningRoutinePhases.count
+                    
+                    //                    NotificationManager.instance.scheduleNotification(title: "Test", subtitle: "Subtitle", sound: "Clock.mp3", dateComponent: DateComponents(hour: 10), identifier: "testNotification", isRepeating: false)
                 }
             
             
@@ -107,10 +145,10 @@ struct HomeHeader : View {
                 }.tabViewStyle(.page(indexDisplayMode: .always))
                     .indexViewStyle(.page(backgroundDisplayMode: .always))
                     .onReceive(timer) { _ in
-                                withAnimation {
-                                    currentShowingTab = (currentShowingTab + 1) % carouselItems.count // Loops back after last tab
-                                }
-                            }
+                        withAnimation {
+                            currentShowingTab = (currentShowingTab + 1) % carouselItems.count // Loops back after last tab
+                        }
+                    }
                 
             }
             else {

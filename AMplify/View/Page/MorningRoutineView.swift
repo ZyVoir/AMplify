@@ -1,20 +1,15 @@
-//
-//  MorningRoutineView.swift
-//  AMplify
-//
-//  Created by William on 29/03/25.
-//
-
 import SwiftUI
 
 struct MorningRoutineView: View {
     
     @Binding var isTransitionComplete: Bool
-    
     @Environment(\.dismiss) var dismiss
     
     @AppStorage("morningRoutineEndTime") var morningRoutineEndTime: String = ""
-    
+    @AppStorage("morningRoutineAlarmSound") var morningRoutineAlarmSound: String = "Clock.mp3"
+    @State private var now = Date()
+    @State private var timerEnded = false
+
     var MREdntTime: Date {
         let components = morningRoutineEndTime.split(separator: ":").compactMap { Int($0) }
         guard components.count == 3 else { return Date() }
@@ -29,11 +24,11 @@ struct MorningRoutineView: View {
     }
 
     var safeCountdownRange: ClosedRange<Date> {
-        let now = Date()
-        return now...(MREdntTime > now ? MREdntTime : now)
+        now...(MREdntTime > now ? MREdntTime : now)
     }
 
     
+
     var body: some View {
         ZStack {
             Image("MRViewBG")
@@ -41,24 +36,26 @@ struct MorningRoutineView: View {
                 .scaledToFill()
                 .ignoresSafeArea()
             
-            VStack (spacing: 30) {
+            VStack(spacing: 30) {
                 Text("Do Your Morning\n Routine! 🌤️")
-                    .font(.system(size: 28, weight: .bold, design: .default))
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(.white)
-                    .lineLimit(2)
                     .multilineTextAlignment(.center)
                 
-                Text(timerInterval: safeCountdownRange, countsDown: true).font(.system(size: 109, weight: .bold, design: .default)).foregroundStyle(.white)
+                Text(timerInterval: safeCountdownRange, countsDown: true)
+                    .font(.system(size: 109, weight: .bold))
+                    .foregroundStyle(.white)
                 
                 Button {
+                    SoundManager.shared.stopSound()
                     dismiss()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         withAnimation {
                             isTransitionComplete = true
                         }
                     }
-                } label : {
-                    HStack{
+                } label: {
+                    HStack {
                         Text("Continue")
                             .font(.headline)
                         Image(systemName: "arrow.right")
@@ -69,8 +66,10 @@ struct MorningRoutineView: View {
                     .cornerRadius(12)
                     .padding(.top, 30)
                 }
-            }.padding()
+            }
+            .padding()
         }
+     
     }
 }
 

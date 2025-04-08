@@ -7,7 +7,11 @@
 
 import SwiftUI
 
+
+
 struct OnboardingViewAlarm: View {
+    
+    
     
     @Binding var onboardingTab: Int
     
@@ -16,36 +20,42 @@ struct OnboardingViewAlarm: View {
     @State private var alarms: [Date] = []
     @State private var alarmName: String = ""
     
+    @State private var isErrorPresented: Bool = false
+    
     @AppStorage("alarmTime") private var alarmTime: String = ""
+    @AppStorage("alarmFreq") private var alarmFreq: String = ""
+    @AppStorage("morningRoutineAlarmSound") private var morningRoutineAlarmSound: String = "Clock.mp3"
+    
+    @State private var errorMsg : String = ""
     
     var body: some View {
         
         ZStack {
             VStack{
-                Text("Let's set your wake up Alarm ⏰")
+                Text("Let's set your wake up Notification ⏰")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding()
                 
                 
-                    VStack {
-                        // DatePicker for selecting alarm time
-                        DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
-                            .datePickerStyle(WheelDatePickerStyle())
-                            .padding(.all, 50)
-                        
-                        
-                        // List of saved alarms
-                        List {
-                            ForEach(alarms, id: \.self) { alarm in
-                                Text(alarm.formatted(date: .omitted, time: .shortened))
-                            }
-                            .onDelete { indexSet in
-                                alarms.remove(atOffsets: indexSet)
-                            }
+                VStack {
+                    // DatePicker for selecting alarm time
+                    DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                        .datePickerStyle(WheelDatePickerStyle())
+                        .padding(.all, 50)
+                    
+                    
+                    // List of saved alarms
+                    List {
+                        ForEach(alarms, id: \.self) { alarm in
+                            Text(alarm.formatted(date: .omitted, time: .shortened))
                         }
-                        .listStyle(PlainListStyle())
+                        .onDelete { indexSet in
+                            alarms.remove(atOffsets: indexSet)
+                        }
                     }
+                    .listStyle(PlainListStyle())
+                }
                 .frame(alignment: .center)
                 .frame(alignment: .center)
                 
@@ -57,13 +67,13 @@ struct OnboardingViewAlarm: View {
                         
                         NavigationLink(destination: RepeatView()){
                             LabeledContent {
-                                Text("Weekdays")
+                                
                             } label: {
                                 Spacer()
                             }
-
+                            
                         }.foregroundStyle(Color.black)
-
+                        
                         
                     }.listRowBackground(Color.lightGreyList)
                     
@@ -82,42 +92,64 @@ struct OnboardingViewAlarm: View {
                     HStack {
                         Text("Alarm sound")
                         Spacer()
-    
+                        
                         NavigationLink(destination: AlarmSoundView()){
                             LabeledContent {
-                                Text("Radial")
+                                
                             } label: {
                                 Spacer()
                             }
-
+                            
                         }.foregroundStyle(Color.black)
                         
                     }.listRowBackground(Color.lightGreyList)
                     
-                    Toggle("Vibration", isOn: $isVibrate)
-                        .listRowBackground(Color.lightGreyList)
+                    //                    Toggle("Vibration", isOn: $isVibrate)
+                    //                        .listRowBackground(Color.lightGreyList)
                     
                 }.frame(width: 400, height: 250)
                 
                     .scrollContentBackground(.hidden)
                 
-                
-                
-                
-                
-                
                 Button(action: {
                     let calendar = Calendar.current
                     var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedTime)
                     components.second = 0
-                    selectedTime = calendar.date(from: components)!
                     
-                    alarmTime = helperFunction.formatAlarmTime(time: selectedTime)
+                    guard let hour = components.hour, let minute = components.minute else { return }
                     
-                    print(alarmTime)
+                    let time = hour * 60 + minute
                     
-                    withAnimation {
-                        onboardingTab += 1
+//                    if time <= 0 || time >= 480 {
+//                        errorMsg = "Time must be between 00:00 AM and 07:59 PM"
+//                        isErrorPresented = true
+//                    }
+                    if alarmName.isEmpty {
+                        errorMsg = "Please enter an alarm name"
+                        isErrorPresented = true
+                    }
+                    else if alarmFreq.count == 0 {
+                        errorMsg = "Please select at least 1 alarm frequency"
+                        isErrorPresented = true
+                    }
+                    else {
+                        selectedTime = calendar.date(from: components)!
+                        
+                        alarmTime = helperFunction.formatAlarmTime(time: selectedTime)
+                        
+                        
+                        print(components.hour ?? 0)
+                        print(components.minute ?? 0)
+                        print(alarmName)
+                        print(alarmFreq)
+                        print(morningRoutineAlarmSound)
+                        
+                        for weekday in alarmFreq {
+                            NotificationManager.instance.scheduleNotification(title: alarmName, subtitle: "🌤️ Morning Alarm", sound: morningRoutineAlarmSound, dateComponent: DateComponents(hour: hour, minute: minute, weekday: Int(String(weekday))), identifier: "\(alarmName)_\(weekday)", isRepeating: true)
+                        }
+                        withAnimation {
+                            onboardingTab += 1
+                        }
                     }
                 }) {
                     HStack{
@@ -133,13 +165,19 @@ struct OnboardingViewAlarm: View {
                     
                 }
                 //                .frame(width: 361, height: 205)
+            }.alert("Error!", isPresented: $isErrorPresented){
+                Button("OK", role: .cancel) {
+                    isErrorPresented = false
+                }
+            } message: {
+                Text(!errorMsg.isEmpty ? errorMsg : "")
             }
         }
         
         //                Color.blue
         //                    .frame(width: 243, height: 261.36)
         
-
+        
     }
     
 }
