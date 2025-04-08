@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ArrivalView: View {
+    
+    @StateObject private var locationManager : LocationManager = LocationManager.shared
+    
     var body: some View {
         ZStack {
             
