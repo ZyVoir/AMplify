@@ -93,6 +93,7 @@ struct PAAView: View {
 //                    .focused($isFocused)
                     .padding(.bottom,30)
                 Button {
+                    SoundManager.shared.stopSound()
                     dismiss()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                         withAnimation {
