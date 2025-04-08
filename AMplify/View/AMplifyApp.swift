@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import BackgroundTasks
 
 @main
 struct AMplifyApp: App {
@@ -15,7 +14,9 @@ struct AMplifyApp: App {
     @AppStorage("morningRoutinePhase") private var phase: morningRoutinePhase = .none
     @AppStorage("lastCheckedDate") private var lastCheckedDate: String = ""
     @AppStorage("isOnboarding") private var isOnboarding: Bool = false
-    
+    @AppStorage("isMorningRoutineStarted") private var isMorningRoutineStarted: Bool = false
+    @AppStorage("alarmTime") var alarmTime: String = "07:00:00"
+    @AppStorage("alarmSound") var alarmSound : String = "Clock.mp3"
     
     init() {
         
@@ -30,7 +31,7 @@ struct AMplifyApp: App {
                 }
         }
     }
-
+    
     func checkForNewDay() {
         let today = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
         
@@ -39,14 +40,25 @@ struct AMplifyApp: App {
         
         if isOnboarding {
             phase = .none
-            isOnboarding = true
             return
         }
         
         if today != lastCheckedDate {
-            print("🌅 New day detected! Running daily task...")
+            print("🌅 New day detected!")
             lastCheckedDate = today
-            phase = .alarmAndPAA
+            print("alarm time : \(alarmTime)")
+            
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm:ss"
+            
+            let currentTime = dateFormatter.string(from: Date())
+                        
+            if !isMorningRoutineStarted && (alarmTime <= currentTime && currentTime < "08:00:00") {
+                isMorningRoutineStarted = true
+                phase = .alarmAndPAA
+                SoundManager.shared.playSound(named: alarmSound.components(separatedBy: ".").first!, extension: alarmSound.description.components(separatedBy: ".")[1],loop: true)
+            }
+            
         } else {
             print("✅ Same day, no action needed")
         }
