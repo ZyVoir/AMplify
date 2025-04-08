@@ -70,7 +70,7 @@ struct MainQuestCard: View {
                     
             case .ADA:
                 ArrivalView()
-                    .navigationBarBackButtonHidden()
+                    
             default:
                 EmptyView()
             }

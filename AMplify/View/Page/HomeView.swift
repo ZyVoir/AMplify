@@ -89,6 +89,7 @@ struct HomeView: View {
                 SoundManager.shared.playSound(named: morningRoutineAlarmSound.components(separatedBy: ".").first!, extension: morningRoutineAlarmSound.description.components(separatedBy: ".")[1],loop: true)
             }
         }
+        .accentColor(Color("White"))
     }
 }
 
@@ -182,7 +183,7 @@ struct MainQuestList : View {
                     colorBottom: Color("Light Blue Gradient 2"),
                     title: morningRoutinePhase.alarmAndPAA.rawValue,
                     subtitle: "It's a new day, fresh start, fresh energy, new opportunities.",
-                    icon: "equal.square.fill",
+                    icon: "alarm.fill",
                     transitionText: "Great, \(username)!"
                 )
                 
