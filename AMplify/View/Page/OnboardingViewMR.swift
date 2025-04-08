@@ -66,7 +66,7 @@ struct OnboardingViewMR: View {
                         
                         NavigationLink(destination: TimerSoundView()){
                             LabeledContent {
-                                Text("Radial")
+                                EmptyView()
                             } label: {
                                 Spacer()
                             }

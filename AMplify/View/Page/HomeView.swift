@@ -53,7 +53,8 @@ struct HomeView: View {
                                 .frame(width: 27, height: 27)
                                 .foregroundColor(Color("Black"))
                         }
-                        .toolbarColorScheme(.dark, for: .navigationBar)
+                        .disabled(isOnboarding)
+                        
                     }
                     .padding(.bottom, 20)
                     
@@ -89,7 +90,8 @@ struct HomeView: View {
                 SoundManager.shared.playSound(named: morningRoutineAlarmSound.components(separatedBy: ".").first!, extension: morningRoutineAlarmSound.description.components(separatedBy: ".")[1],loop: true)
             }
         }
-        .accentColor(Color("White"))
+        .tint(.white)
+        
     }
 }
 

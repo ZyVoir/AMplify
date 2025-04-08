@@ -13,6 +13,7 @@ struct RepeatView: View {
     let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
     
     @AppStorage("alarmFreq") private var alarmFreq: String = ""
+    @Environment(\.dismiss) var dismiss
     
     func storeAlarmFreq() {
         var alarmFreqString = ""
@@ -25,10 +26,29 @@ struct RepeatView: View {
         alarmFreq = alarmFreqString
     }
     
-
+    
     var body: some View {
         
-        NavigationStack {
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
+                    
+                }
+                .tint(.blue)
+                .padding(.leading)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Repeat")
+                    .font(.system(size: 35, weight: .bold))
+                    .padding([.top, .leading])
+                Spacer()
+            }
             List {
                 ForEach(daysOfWeek, id: \.self) { day in
                     HStack {
@@ -53,8 +73,8 @@ struct RepeatView: View {
                         } else {
                             selectedDays.insert(day)
                         }
-                    
-
+                        
+                        
                         storeAlarmFreq()
                     }
                 }
@@ -66,22 +86,22 @@ struct RepeatView: View {
                     selectedDays.insert(daysOfWeek[Int(String(char))!])
                 }
             }
-            .navigationTitle("Repeat")
             
             
-            //                    .toolbar{
-            //                        ToolbarItem(placement: .navigationBarLeading){
-            //                            Button(action : {
-            //                                presentationMode.wrappedValue.dismiss()
-            //                            }){
-            //                                Image(systemName: "chevron.left")
-            //                                    .foregroundStyle(Color.blue)
-            //                            }
-            //                        }
-            //                    }
+//            
+//                                .toolbar{
+//                                    ToolbarItem(placement: .navigationBarLeading){
+//                                        Button(action : {
+//                                            
+//                                        }){
+//                                            Image(systemName: "chevron.left")
+//                                                .foregroundStyle(Color.blue)
+//                                        }
+//                                    }
+//                                }
             .listRowBackground(Color.lightGreyList)
-            
             .scrollContentBackground(.hidden)
+            .scrollDisabled(true)
         }
         
     }

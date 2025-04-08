@@ -65,7 +65,7 @@ struct OnboardingViewAlarm: View {
                         Spacer()
                         
                         
-                        NavigationLink(destination: RepeatView()){
+                        NavigationLink(destination: RepeatView().navigationBarBackButtonHidden()){
                             LabeledContent {
                                 
                             } label: {

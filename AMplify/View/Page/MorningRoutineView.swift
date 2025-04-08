@@ -45,6 +45,9 @@ struct MorningRoutineView: View {
                 Text(timerInterval: safeCountdownRange, countsDown: true)
                     .font(.system(size: 109, weight: .bold))
                     .foregroundStyle(.white)
+                    .padding()
+                    .background(Color.white.opacity(0.2))
+                    .cornerRadius(15)
                 
                 Button {
                     SoundManager.shared.stopSound()

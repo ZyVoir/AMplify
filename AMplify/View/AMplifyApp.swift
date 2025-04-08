@@ -13,7 +13,7 @@ struct AMplifyApp: App {
 
     @AppStorage("morningRoutinePhase") private var phase: morningRoutinePhase = .none
     @AppStorage("lastCheckedDate") private var lastCheckedDate: String = ""
-    @AppStorage("isOnboarding") private var isOnboarding: Bool = false
+    @AppStorage("isOnboarding") private var isOnboarding: Bool = true
     @AppStorage("isMorningRoutineStarted") private var isMorningRoutineStarted: Bool = false
     @AppStorage("alarmTime") var alarmTime: String = "07:00:00"
     @AppStorage("alarmSound") var alarmSound : String = "Clock.mp3"

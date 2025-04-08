@@ -11,15 +11,37 @@ struct TimerSoundView: View {
     
     @State private var selectedSound: String = "Clock.mp3"
     let alarmSounds = ["Clock.mp3", "Facility.wav"]
-
+    
     @AppStorage("morningRoutineAlarmSound") var morningRoutineAlarmSound: String = "Clock.mp3"
+    
+    @Environment(\.dismiss) var dismiss
     
     func setSelectedSound() {
         morningRoutineAlarmSound = selectedSound
     }
     
     var body: some View {
-        NavigationStack{
+        
+        VStack {
+            HStack {
+                Button {
+                    dismiss()
+                } label: {
+                    Image(systemName: "chevron.left")
+                    Text("Back")
+                    
+                }
+                .tint(.blue)
+                .padding(.leading)
+                Spacer()
+            }
+            
+            HStack {
+                Text("Timer Sound")
+                    .font(.system(size: 35, weight: .bold))
+                    .padding([.top, .leading])
+                Spacer()
+            }
             List{
                 ForEach(alarmSounds, id: \.self){ sound in
                     HStack{
@@ -44,10 +66,9 @@ struct TimerSoundView: View {
             .onDisappear{
                 SoundManager.shared.stopSound()
             }
-            .navigationTitle("Timer Sound")
+            .scrollContentBackground(.hidden)
+            .scrollDisabled(true)
         }
-        
-        .scrollContentBackground(.hidden)
     }
 }
 

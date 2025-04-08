@@ -69,7 +69,7 @@ struct MainQuestCard: View {
                 MorningRoutineView(isTransitionComplete: $isTransitionComplete)
                     
             case .ADA:
-                ArrivalView()
+                ArrivalView(isTransitionComplete: $isTransitionComplete)
                     
             default:
                 EmptyView()
@@ -168,11 +168,11 @@ struct MainQuestCard: View {
             .background(RoundedRectangle(cornerSize: CGSize(width: 10, height: 10)).fill(backgroundColor))
             .overlay(RoundedRectangle(cornerRadius: 10).stroke(colorGreyPrimary, lineWidth: isCurrentActive ? 0 : 1))
         }
-        .disabled(!isCurrentActive)
+        .disabled(!isCurrentActive || isTransitionComplete)
         .onChange(of: isTransitionComplete) { oldValue, newValue in
             if isCurrentActive && newValue {
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                     withAnimation {
                         isTransitionComplete = false
                         
