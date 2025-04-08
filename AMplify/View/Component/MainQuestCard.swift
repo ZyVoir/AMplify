@@ -181,6 +181,8 @@ struct MainQuestCard: View {
                             phase = .morningRoutine
                         case .morningRoutine:
                             phase = .ADA
+                            // last quest
+                            LocationManager.shared.startListenForLocation()
                         case .ADA:
                             isMorningRoutineStarted = false
                             phase = .done

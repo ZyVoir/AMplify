@@ -27,12 +27,20 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyBest
         manager.allowsBackgroundLocationUpdates = true
-                manager.pausesLocationUpdatesAutomatically = false
+        manager.pausesLocationUpdatesAutomatically = false
     }
     
     func requestPermission() {
         manager.requestAlwaysAuthorization()
+    }
+    
+    func startListenForLocation() {
         manager.startUpdatingLocation()
+    }
+    
+    func stopUpdatingLocation() {
+        manager.stopUpdatingLocation()
+        print("Stopped updating location")
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -45,7 +53,14 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
             
             print("Updating Location : \(self.distanceFromAcademy)")
         }
-        
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let status = manager.authorizationStatus
+        DispatchQueue.main.async {
+            self.authorizationStatus = status
+            print("Authorization status changed to: \(status.rawValue)")
+        }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
