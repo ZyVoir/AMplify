@@ -45,6 +45,11 @@ struct OnboardingViewLocation: View {
             VStack(spacing: 10) {
                 Button(action: {
                     LocationManager.shared.requestPermission()
+                    
+                    if LocationManager.shared.authorizationStatus == .authorizedAlways || LocationManager.shared.authorizationStatus == .authorizedWhenInUse {
+                        isOnboarding = false
+                        dismiss()
+                    }
                 }) {
                     Text("Allow Location")
                         .frame(maxWidth: .infinity)

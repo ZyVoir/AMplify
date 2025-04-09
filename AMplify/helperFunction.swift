@@ -76,6 +76,13 @@ struct helperFunction {
         return calendar.date(from: dateComponents) ?? Date()
     }
 
+    static func reset(){
+        if let appDomain = Bundle.main.bundleIdentifier {
+            UserDefaults.standard.removePersistentDomain(forName: appDomain)
+            UserDefaults.standard.synchronize()
+        }
+    }
+    
     static func openCicoApp() {
         if let url = URL(string: "cico:") {
             UIApplication.shared.open(url, options: [:]) {
