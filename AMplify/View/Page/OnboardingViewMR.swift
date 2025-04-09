@@ -20,6 +20,10 @@ struct OnboardingViewMR: View {
     @AppStorage("alarmTime") private var alarmTime : String = ""
     @AppStorage("morningRoutineEndTime") private var morningRoutineEndTime : String = ""
     
+    @AppStorage("morningRoutineAlarmSound") var morningRoutineAlarmSound: String = "Clock.mp3"
+    
+    @AppStorage("alarmFreq") private var alarmFreq : String = ""
+    
     var body: some View {
         ZStack{
             VStack{
@@ -86,7 +90,16 @@ struct OnboardingViewMR: View {
                         
                         morningRoutineEndTime = helperFunction.addSecondsToTime(initialTime: alarmTime, secondsToAdd: morningRoutineDuration)
                         
-                        print(morningRoutineEndTime)
+                        let dateComp = helperFunction.parseDateCompToInt(time: morningRoutineEndTime)
+                       
+                        for i in alarmFreq {
+                            if let weekday = Int(String(i)) {
+                                NotificationManager.instance.scheduleNotification(title: "Complete Your Morning Routine", subtitle: "🌤️ Morning Routine", sound: morningRoutineAlarmSound, dateComponent: DateComponents(hour: dateComp[0], minute: dateComp[1], second: dateComp[2], weekday: Int(String(weekday))), identifier: "MR_\(weekday)", isRepeating: true)
+                            }
+                        }
+                        
+                        
+                        
                         
                         withAnimation {
                             onboardingTab += 1

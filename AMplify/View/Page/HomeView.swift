@@ -16,6 +16,10 @@ struct HomeView: View {
     
     @AppStorage("isMorningRoutineStarted") private var isMorningRoutineStarted: Bool = false
     
+    @AppStorage("morningRoutinePhase") private var morningRoutinePhase : morningRoutinePhase = .none
+    
+    @AppStorage("alarmSound") var alarmSound : String = "Clock.mp3"
+    
     @State private var now = Date()
     @State private var timerEnded = false
     
@@ -80,6 +84,10 @@ struct HomeView: View {
             // request location permission
             if !(LocationManager.shared.authorizationStatus == .authorizedAlways || LocationManager.shared.authorizationStatus == .authorizedWhenInUse) && !isOnboarding {
                 LocationManager.shared.requestPermission()
+            }
+            
+            if morningRoutinePhase == .alarmAndPAA && isMorningRoutineStarted {
+                SoundManager.shared.playSound(named: alarmSound.components(separatedBy: ".").first!, extension: alarmSound.description.components(separatedBy: ".")[1],loop: true)
             }
         }
         .onReceive(timer) {currentTime in

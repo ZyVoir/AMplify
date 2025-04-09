@@ -56,6 +56,26 @@ struct helperFunction {
         return outputFormatter.string(from: newDate)
     }
 
+    static func parseDateCompToInt(time : String) -> [Int] {
+        return time.split(separator: ":").compactMap{Int($0)}
+    }
+    
+    static func formatStringToDate(time : String) -> Date {
+        
+        let dateCompInt = parseDateCompToInt(time: time)
+            
+        let calendar = Calendar.current
+        
+        var dateComponents = calendar.dateComponents([.year,.month,.day], from: Date())
+        
+        dateComponents.hour = dateCompInt[0]
+        dateComponents.minute = dateCompInt[1]
+        dateComponents.second = dateCompInt[2]
+        
+        return calendar.date(from: dateComponents) ?? Date()
+    }
+
+    
 }
 
 

@@ -46,17 +46,20 @@ struct AMplifyApp: App {
         if today != lastCheckedDate {
             print("🌅 New day detected!")
             lastCheckedDate = today
-            print("alarm time : \(alarmTime)")
             
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "HH:mm:ss"
+    
+            let currentTime = Date()
+            let formattedAlarmTime : Date = helperFunction.formatStringToDate(time: alarmTime)
+            let formattedAcademyAlarmTime : Date = helperFunction.formatStringToDate(time: "08:00:00")
             
-            let currentTime = dateFormatter.string(from: Date())
-                        
-            if !isMorningRoutineStarted && (alarmTime <= currentTime && currentTime < "08:00:00") {
+            if !isMorningRoutineStarted && (formattedAlarmTime <= currentTime && currentTime < formattedAcademyAlarmTime) {
+                print("Day changed, reseting morning routine")
                 isMorningRoutineStarted = true
                 phase = .alarmAndPAA
                 SoundManager.shared.playSound(named: alarmSound.components(separatedBy: ".").first!, extension: alarmSound.description.components(separatedBy: ".")[1],loop: true)
+            }
+            else if !isMorningRoutineStarted {
+                phase = .none
             }
             
         } else {

@@ -145,7 +145,7 @@ struct OnboardingViewAlarm: View {
                         print(morningRoutineAlarmSound)
                         
                         for weekday in alarmFreq {
-                            NotificationManager.instance.scheduleNotification(title: alarmName, subtitle: "🌤️ Morning Alarm", sound: morningRoutineAlarmSound, dateComponent: DateComponents(hour: hour, minute: minute, weekday: Int(String(weekday))), identifier: "\(alarmName)_\(weekday)", isRepeating: true)
+                            NotificationManager.instance.scheduleNotification(title: alarmName, subtitle: "⏰ Morning Alarm", sound: morningRoutineAlarmSound, dateComponent: DateComponents(hour: hour, minute: minute, weekday: Int(String(weekday))), identifier: "\(alarmName)_\(weekday)", isRepeating: true)
                         }
                         withAnimation {
                             onboardingTab += 1

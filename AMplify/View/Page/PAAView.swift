@@ -119,6 +119,7 @@ struct PAAView: View {
                             .cornerRadius(12)
                     }
                 }
+                .disabled(Int(answer) != result)
 
             }
             

@@ -26,6 +26,8 @@ class SoundManager {
             }
             
             player?.play()
+            
+            print("Sound Played")
         } catch {
             print("Error playing sound: \(error.localizedDescription)")
         }

@@ -91,7 +91,14 @@ struct ArrivalView: View {
                         print("Clock In button tapped")
                         LocationManager.shared.stopUpdatingLocation()
                         isMorningRoutineStarted = false
-                        streakCount += 1
+                        
+                        if Date() > academyGraceTime {
+                            streakCount = 0
+                        }
+                        else {
+                            streakCount += 1
+                        }
+                        
                         isCompleted = true
                     }) {
                         HStack {
