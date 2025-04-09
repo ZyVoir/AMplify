@@ -127,6 +127,7 @@ struct ArrivalView: View {
                         isTransitionComplete = true
                     }
                 }
+                helperFunction.openCicoApp()
             }
         } message: {
             Text("Complete your daily quests so your streak won’t reset!")

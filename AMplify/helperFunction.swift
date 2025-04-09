@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct helperFunction {
     static func getMorningPhaseOrder(state : String) -> Int {
@@ -75,7 +76,13 @@ struct helperFunction {
         return calendar.date(from: dateComponents) ?? Date()
     }
 
-    
+    static func openCicoApp() {
+        if let url = URL(string: "cico:") {
+            UIApplication.shared.open(url, options: [:]) {
+                _ in
+            }
+        }
+    }
 }
 
 
