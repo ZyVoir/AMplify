@@ -4,7 +4,7 @@ Introducing our app, AMplify! To help amplifying your punctuality to the Academy
 
 An iOS app to make sure the mentee of Apple Developer Academy will stay punctual.
 
-## ❓ Problem and 📱 Solution
+## ❓ Problem
 > Did you know that in just the first week (after orientation), there have already been 52 cases of mentees being late at the Apple Developer Academy?
 
 ## 🎯 Key Features
