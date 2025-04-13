@@ -9,11 +9,21 @@ An iOS app to make sure the mentee of Apple Developer Academy will stay punctual
 
 ## 🎯 Key Features
 
-- Wake up notification (to make the mentee wake up)
-- Post alarm activity (to keep the mentee engage during wake up and not overslept)
-- Tracking location in relative to Academy (when near, theres a notification reminder to clock-in)
-- In-app integration to direct mentee to CiCo app for smoother experience
-- Gamification : Streaks
+### Wake Up Notification
+
+  > Notification to make sure the mentee wakes up early in the morning
+  
+### Post alarm activity
+  > To keep the mentee engage during wake up and not overslept
+  
+### Location based tracking
+  > The app locates our current position in relative to Academy (when near, theres a notification reminder to clock-in)
+
+### CiCo Integration
+  > In-app integration to direct mentee to CiCo app for smoother experience
+
+### Gamification
+  > Streaks implementation for motivational purposes
 
 ---
 
